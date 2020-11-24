@@ -30,11 +30,12 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.lwjgl.glfw.GLFW;
 
-public class ExampleMod implements ModInitializer, ClientModInitializer {
+public class OpmcMain implements ModInitializer, ClientModInitializer {
 	private static KeyBinding keyBinding;
-	public static final Identifier ZAPPER_PACKET = new Identifier("example", "zapper");
+	public static final Identifier OPMC_ZAPPER_PACKET = new Identifier("opmc", "zapper");
 
-	public static final FabricItem FABRIC_ITEM = new FabricItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(16));
+	public static final FabricItem OPMC_BLUE_SPIRE_ITEM
+			= new FabricItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(16));
 
 	public static void sendProjectileEpic(World world, PlayerEntity user) {
 		FireballEntity fireballEntity = new FireballEntity(world, user, 0.0f, 0.0f, 0.0f);
@@ -60,13 +61,13 @@ public class ExampleMod implements ModInitializer, ClientModInitializer {
 	private void sendZapperPacket(int i) {
 		PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
 		passedData.writeByte(i);
-		ClientSidePacketRegistry.INSTANCE.sendToServer(ExampleMod.ZAPPER_PACKET, passedData);
+		ClientSidePacketRegistry.INSTANCE.sendToServer(OpmcMain.OPMC_ZAPPER_PACKET, passedData);
 	}
 
 	private void onPressZ(MinecraftClient client) {
 		chatMsg(client, "Z nedtryckt");
 		ItemStack itemStack = client.player.getStackInHand(Hand.MAIN_HAND);
-		if (itemStack.getItem().equals(FABRIC_ITEM)) {
+		if (itemStack.getItem().equals(OPMC_BLUE_SPIRE_ITEM)) {
 			chatMsg(client, "slot 0 is MY THING");
 			chatMsg(client, "slot 0 is: " + itemStack.getItem().getTranslationKey());
 			client.player.playSound(SoundEvents.ENTITY_SHEEP_HURT, 1.0F, 1.0F);
@@ -85,14 +86,14 @@ public class ExampleMod implements ModInitializer, ClientModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		System.out.println("Hello Oscar and Matilda!");
-		Registry.register(Registry.ITEM, new Identifier("tutorial", "fabric_item"), FABRIC_ITEM);
+		System.out.println("OPMC loaded");
+		Registry.register(Registry.ITEM, new Identifier("opmc", "blue_spire"), OPMC_BLUE_SPIRE_ITEM);
 
 		keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-				"key.examplemod.spook", // The translation key of the keybinding's name
+				"key.opmc.use_spire", // The translation key of the keybinding's name
 				InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
 				GLFW.GLFW_KEY_Z, // The keycode of the key
-				"category.examplemod.test" // The translation key of the keybinding's category.
+				"category.opmc.keys" // The translation key of the keybinding's category.
 		));
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (keyBinding.wasPressed()) {
@@ -100,7 +101,7 @@ public class ExampleMod implements ModInitializer, ClientModInitializer {
 			}
 		});
 
-		ServerSidePacketRegistry.INSTANCE.register(ZAPPER_PACKET, (packetContext, attachedData) -> {
+		ServerSidePacketRegistry.INSTANCE.register(OPMC_ZAPPER_PACKET, (packetContext, attachedData) -> {
 			byte type = attachedData.readByte();
 			packetContext.getTaskQueue().execute(() -> {
 				// Execute on the main thread

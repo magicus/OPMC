@@ -1,37 +1,31 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "opmc",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "OverPowered Minecraft (OPMC)",
+  "description": "Minecraft with more power",
   "authors": [
-    "Me!"
+    "The Bursie Family"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/magicus/opmc",
+    "sources": "https://github.com/magicus/opmc"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/opmc/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.bursie.opmc.ExampleMod"
+      "com.bursie.opmc.OpmcMain"
     ]
   },
-  "mixins": [
-    "modid.mixins.json"
-  ],
 
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
     "minecraft": "1.16.x"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }

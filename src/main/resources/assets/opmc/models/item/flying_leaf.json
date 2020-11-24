@@ -1,6 +1,6 @@
 {
   "parent": "builtin/generated",
   "textures": {
-    "layer0": "tutorial:item/fabric_item"
+    "layer0": "opmc:item/flying_leaf"
   }
 }

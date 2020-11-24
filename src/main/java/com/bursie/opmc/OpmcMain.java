@@ -4,6 +4,7 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
@@ -34,8 +35,19 @@ public class OpmcMain implements ModInitializer, ClientModInitializer {
 	private static KeyBinding keyBinding;
 	public static final Identifier OPMC_ZAPPER_PACKET = new Identifier("opmc", "zapper");
 
-	public static final FabricItem OPMC_BLUE_SPIRE_ITEM
-			= new FabricItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(16));
+	public static final ItemGroup OPMC_ITEM_GROUP = FabricItemGroupBuilder.create(
+			new Identifier("opmc", "other"))
+			.icon(() -> new ItemStack(Items.FIRE_CHARGE))
+			.build();
+
+	public static final OpmcSpireItem OPMC_BLUE_SPIRE_ITEM = new OpmcSpireItem(new FabricItemSettings().group(OPMC_ITEM_GROUP).maxCount(16));
+	public static final OpmcSpireItem OPMC_RED_SPIRE_ITEM = new OpmcSpireItem(new FabricItemSettings().group(OPMC_ITEM_GROUP).maxCount(16));
+	public static final OpmcSpireItem OPMC_GREEN_SPIRE_ITEM = new OpmcSpireItem(new FabricItemSettings().group(OPMC_ITEM_GROUP).maxCount(16));
+	public static final OpmcSpireItem OPMC_BLUE_WILING_SWORD_ITEM = new OpmcSpireItem(new FabricItemSettings().group(OPMC_ITEM_GROUP).maxCount(16));
+	public static final OpmcSpireItem OPMC_RED_WILING_SWORD_ITEM = new OpmcSpireItem(new FabricItemSettings().group(OPMC_ITEM_GROUP).maxCount(16));
+	public static final OpmcSpireItem OPMC_LARGE_DIAMOND_SWORD_ITEM = new OpmcSpireItem(new FabricItemSettings().group(OPMC_ITEM_GROUP).maxCount(16));
+	public static final OpmcSpireItem OPMC_WILING_CRYSTAL_ITEM = new OpmcSpireItem(new FabricItemSettings().group(OPMC_ITEM_GROUP).maxCount(16));
+	public static final OpmcSpireItem OPMC_FLYING_LEAF_ITEM = new OpmcSpireItem(new FabricItemSettings().group(OPMC_ITEM_GROUP).maxCount(16));
 
 	public static void sendProjectileEpic(World world, PlayerEntity user) {
 		FireballEntity fireballEntity = new FireballEntity(world, user, 0.0f, 0.0f, 0.0f);
@@ -88,6 +100,13 @@ public class OpmcMain implements ModInitializer, ClientModInitializer {
 
 		System.out.println("OPMC loaded");
 		Registry.register(Registry.ITEM, new Identifier("opmc", "blue_spire"), OPMC_BLUE_SPIRE_ITEM);
+		Registry.register(Registry.ITEM, new Identifier("opmc", "red_spire"), OPMC_RED_SPIRE_ITEM);
+		Registry.register(Registry.ITEM, new Identifier("opmc", "green_spire"), OPMC_GREEN_SPIRE_ITEM);
+		Registry.register(Registry.ITEM, new Identifier("opmc", "blue_wiling_sword"), OPMC_BLUE_WILING_SWORD_ITEM);
+		Registry.register(Registry.ITEM, new Identifier("opmc", "red_wiling_sword"), OPMC_RED_WILING_SWORD_ITEM);
+		Registry.register(Registry.ITEM, new Identifier("opmc", "large_diamond_sword"), OPMC_LARGE_DIAMOND_SWORD_ITEM);
+		Registry.register(Registry.ITEM, new Identifier("opmc", "wiling_crystal"), OPMC_WILING_CRYSTAL_ITEM);
+		Registry.register(Registry.ITEM, new Identifier("opmc", "flying_leaf"), OPMC_FLYING_LEAF_ITEM);
 
 		keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
 				"key.opmc.use_spire", // The translation key of the keybinding's name
@@ -120,9 +139,9 @@ public class OpmcMain implements ModInitializer, ClientModInitializer {
 	public void onInitializeClient() {
 	}
 
-	public static class FabricItem extends Item {
+	public static class OpmcSpireItem extends Item {
 
-		public FabricItem(Settings settings) {
+		public OpmcSpireItem(Settings settings) {
 			super(settings);
 		}
 

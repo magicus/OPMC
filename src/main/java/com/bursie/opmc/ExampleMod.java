@@ -40,7 +40,7 @@ public class ExampleMod implements ModInitializer, ClientModInitializer {
 		FireballEntity fireballEntity = new FireballEntity(world, user, 0.0f, 0.0f, 0.0f);
 		fireballEntity.setProperties(user, user.pitch, user.yaw, 0.0F, 1.5F, 1.0F);
 
-		fireballEntity.explosionPower = 1;
+		fireballEntity.explosionPower = 10;
 		fireballEntity.updatePosition(user.getX(), user.getY(), user.getZ());
 		world.spawnEntity(fireballEntity);
 	}
